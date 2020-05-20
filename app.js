@@ -1,4 +1,5 @@
 const apiKey = "4f4ae9f965cf307b8658cdd4a0458dba";
+const currentConditions = document.querySelector('.current-conditions');
 
 if(navigator.geolocation) {
   navigator.geolocation.getCurrentPosition(function(position){
@@ -11,8 +12,21 @@ if(navigator.geolocation) {
         }
       }).then(data => {
         console.log(data);
+        insertCurrentWeather(data);
       })  
   })
 } else {
   console.log("Geolocation is not supported");
 } 
+
+function insertCurrentWeather(data) {
+
+  currentConditions.insertAdjacentHTML('afterbegin', `
+    <h2>Current Conditions</h2>
+    <img src="http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" />
+    <div class="current">
+      <div class="temp">${data.main.temp}℃</div>
+      <div class="condition">${data.weather[0].description}</div>
+    </div>
+  `)
+}
