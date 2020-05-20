@@ -14,6 +14,14 @@ if(navigator.geolocation) {
         console.log(data);
         insertCurrentWeather(data);
       })  
+    fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`)
+      .then (resp => {
+        if (resp.ok) {
+          return(resp.json());
+        }
+      }).then(data => {
+        console.log(data);
+      }) 
   })
 } else {
   console.log("Geolocation is not supported");
@@ -30,3 +38,4 @@ function insertCurrentWeather(data) {
     </div>
   `)
 }
+
